@@ -1,0 +1,2 @@
+# pyPA
+wrapper around PulseAudio
