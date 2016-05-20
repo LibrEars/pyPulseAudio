@@ -1,2 +1,2 @@
-# pyPA
+# pyPulseAudio
 wrapper around PulseAudio
