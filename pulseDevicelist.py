@@ -33,7 +33,7 @@ int pa_get_devicelist(pa_devicelist_t *input, pa_devicelist_t *output) {
     // Define our pulse audio loop and connection variables
     pa_mainloop *pa_ml;
     pa_mainloop_api *pa_mlapi;
-    pa_operation *pa_op;
+    pa_operation *pa_op = NULL;
     pa_context *pa_ctx;
 
     // We'll need these state variables to keep track of our requests
@@ -82,7 +82,7 @@ int pa_get_devicelist(pa_devicelist_t *input, pa_devicelist_t *output) {
             case 0:
                 // This sends an operation to the server.  pa_sinklist_info is
                 // our callback function and a pointer to our devicelist will
-                // be passed to the callback The operation ID is stored in the
+                // be passed to the callback. The operation ID is stored in the
                 // pa_op variable
                 pa_op = pa_context_get_sink_info_list(pa_ctx,
                         pa_sinklist_cb,
@@ -96,6 +96,7 @@ int pa_get_devicelist(pa_devicelist_t *input, pa_devicelist_t *output) {
                 // Now we wait for our operation to complete.  When it's
                 // complete our pa_output_devicelist is filled out, and we move
                 // along to the next state
+                if ( pa_op == NULL ) return 404;
                 if (pa_operation_get_state(pa_op) == PA_OPERATION_DONE) {
                     pa_operation_unref(pa_op);
 
