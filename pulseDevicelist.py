@@ -217,7 +217,5 @@ ffi.cdef("""
     int pa_get_devicelist(pa_devicelist_t *input, pa_devicelist_t *output);
 """)
 
-#lib = ffi.dlopen(
-
 ffi.compile(verbose=True)
 
