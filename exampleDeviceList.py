@@ -1,8 +1,4 @@
-#from cffi import FFI
 from DeviceList import ffi, lib
-#ffi = FFI()
-
-#lib = ffi.dlopen('pulse')
 
 # This is where we'll store the input device list
 inputDevicelist = ffi.new("pa_devicelist_t pa_input_devicelist[16]")
