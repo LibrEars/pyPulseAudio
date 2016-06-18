@@ -14,6 +14,7 @@ ffi.set_source("DeviceList",
 #include <string.h>
 #include <stdio.h>
 #include <pulse/pulseaudio.h>
+//#include <pulse/context.h>
 
 // Field list is here: http://0pointer.de/lennart/projects/pulseaudio/doxygen/structpa__sink__info.html
 typedef struct pa_devicelist {
@@ -27,6 +28,7 @@ void pa_state_cb(pa_context *c, void *userdata);
 void pa_sinklist_cb(pa_context *c, const pa_sink_info *l, int eol, void *userdata);
 void pa_sourcelist_cb(pa_context *c, const pa_source_info *l, int eol, void *userdata);
 int pa_get_devicelist(pa_devicelist_t *input, pa_devicelist_t *output);
+//void pa_context_disconnect(pa_context *pa_ctx);
 
 
 int pa_get_devicelist(pa_devicelist_t *input, pa_devicelist_t *output) {
@@ -205,7 +207,7 @@ void pa_sourcelist_cb(pa_context *c, const pa_source_info *l, int eol, void *use
         }
     }
 }     
-""")
+""", libraries=[])
 
 ffi.cdef("""
     typedef struct pa_devicelist {
@@ -217,4 +219,4 @@ ffi.cdef("""
     int pa_get_devicelist(pa_devicelist_t *input, pa_devicelist_t *output);
 """)
 
-ffi.compile()
+ffi.compile(verbose=True)
