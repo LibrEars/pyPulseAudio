@@ -15,9 +15,9 @@ for i in range(16):
 
     print("\n=======[ Output Device #" + str(i+1) + " ]=======\n" 
           + "Description: " 
-          + str(ffi.string(outputDevicelist[i].description)) + "\n" 
+          + ffi.string(outputDevicelist[i].description).decode('utf8') + "\n" 
           + "Name: " 
-          + str(ffi.string(outputDevicelist[i].name)) + "\n" 
+          + ffi.string(outputDevicelist[i].name).decode('utf8') + "\n" 
           + "Index: " + str(outputDevicelist[i].index))
 
 for i in range(16):
@@ -26,8 +26,8 @@ for i in range(16):
 
     print("\n=======[ Input Device #" + str(i+1) + " ]=======\n"
           + "Description: " 
-          + str(ffi.string(inputDevicelist[i].description)) + "\n" 
+          + ffi.string(inputDevicelist[i].description).decode('utf8') + "\n" 
           + "Name: " 
-          + str(ffi.string(inputDevicelist[i].name)) + "\n" 
+          + ffi.string(inputDevicelist[i].name).decode('utf8') + "\n" 
           + "Index: " + str(inputDevicelist[i].index) + "\n")
 
