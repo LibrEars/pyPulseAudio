@@ -1,4 +1,4 @@
-from DeviceList import ffi, lib
+from devicelist import ffi, lib
 
 # This is where we'll store the input device list
 inputDevicelist = ffi.new("pa_devicelist_t pa_input_devicelist[16]")

@@ -9,7 +9,7 @@ from cffi import FFI
 
 ffi = FFI()
 
-ffi.set_source("DeviceList",
+ffi.set_source("devicelist",
 """
 #include <string.h>
 #include <stdio.h>
