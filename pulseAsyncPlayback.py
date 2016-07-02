@@ -9,10 +9,11 @@ from cffi import FFI
 
 ffi = FFI()
 
-ffi.set_source("DeviceList",
+ffi.set_source("asyncplayback",
 """
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include <pulse/pulseaudio.h>
 
 static int latency = 20000; // start latency in micro seconds
@@ -50,7 +51,7 @@ static void stream_request_cb(pa_stream *s, size_t length, void *userdata) {
   pa_usec_t usec;
   int neg;
   pa_stream_get_latency(s,&usec,&neg);
-  printf("  latency %8d us\n",(int)usec);
+  printf("  latency %8d us\\n",(int)usec);
   if (sampleoffs*2 + length > sizeof(sampledata)) {
     sampleoffs = 0;
   }
@@ -64,7 +65,7 @@ static void stream_request_cb(pa_stream *s, size_t length, void *userdata) {
 static void stream_underflow_cb(pa_stream *s, void *userdata) {
   // We increase the latency by 50% if we get 6 underflows and latency is under 2s
   // This is very useful for over the network playback that can't handle low latencies
-  printf("underflow\n");
+  printf("underflow\\n");
   underflows++;
   if (underflows >= 6 && latency < 2000000) {
     latency = (latency*3)/2;
@@ -72,7 +73,7 @@ static void stream_underflow_cb(pa_stream *s, void *userdata) {
     bufattr.tlength = pa_usec_to_bytes(latency,&ss);  
     pa_stream_set_buffer_attr(s, &bufattr, NULL, NULL);
     underflows = 0;
-    printf("latency increased to %d\n", latency);
+    printf("latency increased to %d\\n", latency);
   }
 }
 
@@ -121,7 +122,7 @@ int main(int argc, char *argv[]) {
   ss.format = PA_SAMPLE_S16LE;
   playstream = pa_stream_new(pa_ctx, "Playback", &ss, NULL);
   if (!playstream) {
-    printf("pa_stream_new failed\n");
+    printf("pa_stream_new failed\\n");
   }
   pa_stream_set_write_callback(playstream, stream_request_cb, NULL);
   pa_stream_set_underflow_callback(playstream, stream_underflow_cb, NULL);
@@ -141,7 +142,7 @@ int main(int argc, char *argv[]) {
                                    PA_STREAM_AUTO_TIMING_UPDATE, NULL, NULL);
   }
   if (r < 0) {
-    printf("pa_stream_connect_playback failed\n");
+    printf("pa_stream_connect_playback failed\\n");
     retval = -1;
     goto exit;
   }
